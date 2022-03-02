@@ -12,14 +12,17 @@ export interface Telephone {
 }
 
 export interface Agent {
+  id: number;
   email: string;
   name: string;
   lastName: string;
+  ivrPhone?: string;
   image?: string;
   telephoneForwarding?: Telephone;
 }
 
 export interface Lead {
+  id?: number;
   email: string;
   name: string;
   lastName: string;

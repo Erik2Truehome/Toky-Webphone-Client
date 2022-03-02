@@ -51,6 +51,7 @@ export class CreatePortService {
 
     function dataTest() {
       let agentLinkedPort: Agent = {
+        id: 1,
         email: email,
         name: 'Erik',
         lastName: 'Montes',
@@ -68,6 +69,7 @@ export class CreatePortService {
       };
 
       let agentAssigned1: Agent = {
+        id: 1,
         email: '',
         name: 'pedro',
         lastName: 'Peñaflores',
