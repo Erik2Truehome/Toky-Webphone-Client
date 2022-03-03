@@ -4,21 +4,10 @@ import { APP_ID, Injectable, OnInit } from '@angular/core';
 //const TokySDK = require('toky-phone-js-sdk');
 import { OptionUI } from '../classes/OptionUI';
 
-import {
-  IPort,
-  Agent,
-  BusinessTarget,
-  CurrentInfoPort,
-  Lead,
-  PortRegistrationStatus,
-  PortStatus,
-  Telephone,
-  Country,
-} from '../interfaces/IPort';
+import { Country } from '../interfaces/IPort';
 import { CreatePortService } from './create-port.service';
 
 import { TokenService } from './token.service';
-import { RealTimeService } from '../../real-time-communication/services/real-time.service';
 
 @Injectable({
   providedIn: 'root',
@@ -30,12 +19,12 @@ export class PortService {
   private APP_KEY: string =
     'f63da3431de5ae0360d6d37d8865cad2f579fc558c43dbca8c122949af282f5b';
 
+  private readonly phoneNumberTEC: string = '+525585262096'; //numero por el que sacamos las llamadas a los leads
   private agentIdEmail = 'misael@truehome.com.mx'; //'erik.montes+demo@truehome.com.mx'; ////'dessire.pena@truehome.com.mx' //'misael@truehome.com.mx'
 
   constructor(
     private tokenService: TokenService,
-    private createPortService: CreatePortService,
-    private realTimeService: RealTimeService
+    private createPortService: CreatePortService
   ) {
     this.ports = [];
 
@@ -78,6 +67,15 @@ export class PortService {
       console.log('los puertos actuales', this.ports);
     } catch (e) {
       console.error(e);
+    }
+  }
+
+  public MakeCall(phone: string, countryCode: string) {
+    const port = this.ports.find((port) => port.idDatabase === 1);
+    console.warn('chalu-Port.service.MakeCall()');
+    if (port) {
+      port.configureAgentAssigned('testEmail@truehome.com.mx');
+      port.launchCall(this.phoneNumberTEC, phone, countryCode);
     }
   }
 }

@@ -3,6 +3,7 @@ import { IPort } from 'src/app/telephony-port/interfaces/IPort';
 import { TransferOptionsEnum } from 'src/app/toky-sdk/toky-sdk';
 import { PortService } from '../../telephony-port/service/port.service';
 import { PortStatus } from '../../telephony-port/interfaces/IPort';
+import { RealTimeService } from '../../real-time-communication/services/real-time.service';
 
 @Component({
   selector: 'app-softphone-actions',
@@ -14,7 +15,7 @@ export class SoftphoneActionsComponent implements OnInit {
   public transferringEmail: string = '';
 
   public get IsThereAnyActiveCall(): boolean {
-    let port: IPort = [...this.portService.ports].find(
+    let port: IPort = [...this.realTimeService.portService.ports].find(
       (port) => port.idDatabase === 1
     );
     if (port) {
@@ -28,7 +29,7 @@ export class SoftphoneActionsComponent implements OnInit {
   }
 
   public get isOnHold(): boolean {
-    let port: IPort = [...this.portService.ports].find(
+    let port: IPort = [...this.realTimeService.portService.ports].find(
       (port) => port.idDatabase === 1
     );
     if (port) {
@@ -38,38 +39,46 @@ export class SoftphoneActionsComponent implements OnInit {
     }
   }
 
-  constructor(private portService: PortService) {}
+  constructor(private realTimeService: RealTimeService) {}
 
   ngOnInit(): void {
-    /*this.port = this.portService.ports.find((port) => port.idDatabase === 1);
+    /*this.port = this.realTimeService.portService.ports.find((port) => port.idDatabase === 1);
     if (!this.port) {
       console.error('El puerto telefonico del softphone es indefinido ');
     }*/
   }
 
   public hangUpCurrentCall(): void {
-    const port = this.portService.ports.find((port) => port.idDatabase === 1);
+    const port = this.realTimeService.portService.ports.find(
+      (port) => port.idDatabase === 1
+    );
     if (port) {
       port.hangUp();
     }
   }
 
   public tranferToNumber(): void {
-    const port = this.portService.ports.find((port) => port.idDatabase === 1);
+    const port = this.realTimeService.portService.ports.find(
+      (port) => port.idDatabase === 1
+    );
     if (port) {
       port.TransferToNumber(this.transferringPhone, TransferOptionsEnum.WARM); //blind or warm, la mejor es la warm, porque en blind el cliente final deja de escuchar el audio de espera
     }
   }
 
   public tranferToEmail(): void {
-    const port = this.portService.ports.find((port) => port.idDatabase === 1);
+    const port = this.realTimeService.portService.ports.find(
+      (port) => port.idDatabase === 1
+    );
     if (port) {
       port.TransferToEmail(this.transferringEmail, TransferOptionsEnum.WARM); //blind or warm, la mejor es la warm, porque en blind el cliente final deja de escuchar el audio de espera
     }
   }
 
   public AnswerInboundCall(): void {
-    const port = this.portService.ports.find((port) => port.idDatabase === 1);
+    const port = this.realTimeService.portService.ports.find(
+      (port) => port.idDatabase === 1
+    );
     if (port) {
       port.AnswerInboundCall(); //blind or warm, la mejor es la warm, porque en blind el cliente final deja de escuchar el audio de espera
     }
@@ -77,7 +86,9 @@ export class SoftphoneActionsComponent implements OnInit {
 
   public holdCall(): void {
     console.log('que onda');
-    const port = this.portService.ports.find((port) => port.idDatabase === 1);
+    const port = this.realTimeService.portService.ports.find(
+      (port) => port.idDatabase === 1
+    );
     if (port) {
       if (this.isOnHold) {
         port.unhold();

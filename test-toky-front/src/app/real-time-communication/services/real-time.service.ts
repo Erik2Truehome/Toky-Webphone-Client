@@ -2,16 +2,20 @@ import { Injectable } from '@angular/core';
 
 //signalr
 import { HubConnectionBuilder, HubConnection } from '@microsoft/signalr';
+import { PortService } from 'src/app/telephony-port/service/port.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RealTimeService {
   public hubConnGral: HubConnection | undefined;
+  public portService: PortService;
 
   private urlHubGral: string = 'https://localhost:7292/hub/Telephony';
   private idenfierLog: string = 'RealTime';
-  constructor() {
+
+  constructor(portService: PortService) {
+    this.portService = portService;
     console.log(`[${this.idenfierLog}]-el Servicio de signalR ha sido creado`);
 
     this.initializeSignalR();
@@ -35,8 +39,21 @@ export class RealTimeService {
 
   private addListenersFromBackend() {
     this.hubConnGral!.on('CallLeadOnFront', (someObject) => {
-      //`[${this.idenfierLog}]-object received-> ${JSON.stringify(someObject)}`
-      console.log(`[${this.idenfierLog}]-object received-> ${someObject}`);
+      try {
+        console.log(`[${this.idenfierLog}]-object received-> ${someObject}`);
+        console.log('hola');
+        console.log(
+          this.portService.MakeCall,
+          someObject.Lead.telephone.CountryCode,
+          someObject.Lead.telephone.Number
+        );
+        // this.portService.MakeCall(
+        //   someObject.Lead.telephone.Number,
+        //   someObject.Lead.telephone.CountryCode
+        // );
+      } catch (err) {
+        console.error(err);
+      }
     });
   }
 }
