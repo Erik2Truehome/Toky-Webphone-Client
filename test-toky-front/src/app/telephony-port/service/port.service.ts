@@ -18,6 +18,7 @@ import {
 import { CreatePortService } from './create-port.service';
 
 import { TokenService } from './token.service';
+import { RealTimeService } from '../../real-time-communication/services/real-time.service';
 
 @Injectable({
   providedIn: 'root',
@@ -33,7 +34,8 @@ export class PortService {
 
   constructor(
     private tokenService: TokenService,
-    private createPortService: CreatePortService
+    private createPortService: CreatePortService,
+    private realTimeService: RealTimeService
   ) {
     this.ports = [];
 
