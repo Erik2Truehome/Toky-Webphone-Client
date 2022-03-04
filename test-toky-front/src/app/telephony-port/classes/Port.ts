@@ -338,6 +338,15 @@ export class Port implements IPort {
       console.log(`#[${this.idDatabase}]-tokySession-RINGING`);
       this.currentInfo.status = PortStatus.DIALING;
       this._isThereAnyActiveCall = true;
+      setTimeout(() => {
+        console.log('jaja');
+        if (this.currentInfo.status === PortStatus.DIALING) {
+          console.warn(
+            'ya pasaron los 19 segundos de dialing o discado. Cancelaremos la marcacion y reagendaremos'
+          );
+          this.tokySession.endCall();
+        }
+      }, 23000);
     });
 
     this.tokySession.on(SessionStatus.CONNECTED, () => {
