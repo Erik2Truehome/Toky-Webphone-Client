@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 //signalr
 import { HubConnectionBuilder, HubConnection } from '@microsoft/signalr';
 import { PortService } from 'src/app/telephony-port/service/port.service';
+import { IAssignmentInfo } from '../../telephony-port/interfaces/IAssignmentInfo';
 
 @Injectable({
   providedIn: 'root',
@@ -44,12 +45,9 @@ export class RealTimeService {
           `[${this.idenfierLog}]-object received-> ${objectReceived}`
         );
 
-        const businessTarget = JSON.parse(objectReceived); //el string recibido lo pasamos a un objeto
-        console.log(businessTarget.Lead); //este ya es un objeto
-        this.portService.MakeCall(
-          businessTarget.Lead.Telephone.Number,
-          businessTarget.Lead.Telephone.CountryCode
-        );
+        const assigment: IAssignmentInfo = JSON.parse(objectReceived); //el string recibido lo pasamos a un objeto
+        console.log(assigment.BusinessTarget.Lead); //este ya es un objeto
+        this.portService.MakeCall(assigment);
       } catch (err) {
         console.error(err);
       }

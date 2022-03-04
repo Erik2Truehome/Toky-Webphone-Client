@@ -8,6 +8,10 @@ import { Country } from '../interfaces/IPort';
 import { CreatePortService } from './create-port.service';
 
 import { TokenService } from './token.service';
+import {
+  IAssignmentInfo,
+  BusinessTargetReceived,
+} from '../interfaces/IAssignmentInfo';
 
 @Injectable({
   providedIn: 'root',
@@ -70,11 +74,15 @@ export class PortService {
     }
   }
 
-  public MakeCall(phone: string, countryCode: string) {
+  public MakeCall(assignmentInfo: IAssignmentInfo) {
+    const phone: string = assignmentInfo.BusinessTarget.Lead.Telephone.Number;
+    const countryCode: string =
+      assignmentInfo.BusinessTarget.Lead.Telephone.CountryCode;
+
     const port = this.ports.find((port) => port.idDatabase === 1);
-    console.warn('chalu-Port.service.MakeCall()');
+    console.warn('Port.service.MakeCall()');
     if (port) {
-      port.configureAgentAssigned('testEmail@truehome.com.mx'); //este ya no será necesario posiblemente
+      port.configureCurrentBusinessTarget(assignmentInfo.BusinessTarget);
       port.launchCall(this.phoneNumberTEC, phone, countryCode);
     }
   }

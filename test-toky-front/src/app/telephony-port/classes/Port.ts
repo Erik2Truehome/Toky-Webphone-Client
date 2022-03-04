@@ -1,3 +1,4 @@
+import { ThrowStmt } from '@angular/compiler';
 import {
   ClientStatus,
   SessionStatus,
@@ -10,6 +11,8 @@ import { Client } from 'toky-phone-js-sdk/dist/types/src/client';
 
 import {
   Agent,
+  Telephone,
+  Lead,
   Country,
   CurrentInfoPort,
   IPort,
@@ -19,6 +22,8 @@ import {
 
 import { OptionUI } from './OptionUI';
 import { InvitePkg } from './SIP/Package/InvitePkg';
+import { BusinessTarget } from '../interfaces/IPort';
+import { BusinessTargetReceived } from '../interfaces/IAssignmentInfo';
 
 export class Port implements IPort {
   idDatabase: number;
@@ -465,8 +470,42 @@ export class Port implements IPort {
     this._isOnHold = false;
   }
 
-  public configureAgentAssigned(emailAgent: string): void {
-    this.currentInfo.businessTarget!.agentAssigned.email = emailAgent;
+  public configureCurrentBusinessTarget(
+    businessTargetReceived: BusinessTargetReceived
+  ): void {
+    try {
+      const leadPhone: Telephone = {
+        areaCode: businessTargetReceived.Lead.Telephone.CountryCode,
+        number: businessTargetReceived.Lead.Telephone.Number,
+      };
+
+      const leadCasted: Lead = {
+        email: businessTargetReceived.Lead.Email,
+        name: businessTargetReceived.Lead.Name,
+        lastName: businessTargetReceived.Lead.Lastname,
+        id: businessTargetReceived.Lead.IdIntern,
+        telephone: leadPhone,
+      };
+
+      const agentCasted: Agent = {
+        id: businessTargetReceived.Agent.IdIntern,
+        email: businessTargetReceived.Agent.Email,
+        name: businessTargetReceived.Agent.Name,
+        lastName: businessTargetReceived.Agent.Lastname,
+        ivrPhone: businessTargetReceived.Agent.IvrPhone,
+        image: businessTargetReceived.Agent.ImageUrl,
+        telephoneForwarding: businessTargetReceived.Agent.TelephoneForwarding,
+      };
+
+      const businessTarget: BusinessTarget = {
+        lead: leadCasted,
+        agentAssigned: agentCasted,
+      };
+
+      this.currentInfo.businessTarget = businessTarget;
+    } catch (e) {
+      console.error('No se puedo configurar el current business Target');
+    }
   }
 
   public configureIvrOfAgentAssigned(ivrPhone: string): void {
