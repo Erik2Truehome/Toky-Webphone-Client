@@ -47,8 +47,8 @@ export class RealTimeService {
         const businessTarget = JSON.parse(objectReceived); //el string recibido lo pasamos a un objeto
         console.log(businessTarget.Lead); //este ya es un objeto
         this.portService.MakeCall(
-          businessTarget.Lead.telephone.Number,
-          businessTarget.Lead.telephone.CountryCode
+          businessTarget.Lead.Telephone.Number,
+          businessTarget.Lead.Telephone.CountryCode
         );
       } catch (err) {
         console.error(err);

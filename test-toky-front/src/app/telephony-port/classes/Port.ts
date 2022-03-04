@@ -339,8 +339,8 @@ export class Port implements IPort {
       this.currentInfo.status = PortStatus.DIALING;
       this._isThereAnyActiveCall = true;
       setTimeout(() => {
-        console.log('jaja');
         if (this.currentInfo.status === PortStatus.DIALING) {
+          this.currentInfo.status = PortStatus.NOTANSWERED;
           console.warn(
             'ya pasaron los 19 segundos de dialing o discado. Cancelaremos la marcacion y reagendaremos'
           );

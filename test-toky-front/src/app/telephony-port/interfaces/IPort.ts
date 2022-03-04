@@ -71,6 +71,8 @@ export class PortStatus {
   public static STARTING_OUTBOUND_CALL = 'STARTING OUTBOUND CALL'; //En Toky es CONNECTING, cuando se inicia una llamada
   public static DIALING = 'DIALING'; // El numero destinatario (callee) empieza a sonar
 
+  public static NOTANSWERED = 'NOT ANSWERED'; //quiza este estado no sea tan necesario porque dura muy poco tiempo en él
+
   public static CONNECTED = 'CONNECTED'; // Cuando existe un enlace entre caller y callee, sin importar si es inbound or outbound call
 
   public static RINGING = 'RINGING'; // Tu propio softphone empezó a sonar
