@@ -74,7 +74,7 @@ export class PortService {
     const port = this.ports.find((port) => port.idDatabase === 1);
     console.warn('chalu-Port.service.MakeCall()');
     if (port) {
-      port.configureAgentAssigned('testEmail@truehome.com.mx');
+      port.configureAgentAssigned('testEmail@truehome.com.mx'); //este ya no será necesario posiblemente
       port.launchCall(this.phoneNumberTEC, phone, countryCode);
     }
   }

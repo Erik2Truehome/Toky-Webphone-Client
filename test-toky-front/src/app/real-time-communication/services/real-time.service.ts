@@ -38,19 +38,18 @@ export class RealTimeService {
   }
 
   private addListenersFromBackend() {
-    this.hubConnGral!.on('CallLeadOnFront', (someObject) => {
+    this.hubConnGral!.on('CallLeadOnFront', (objectReceived) => {
       try {
-        console.log(`[${this.idenfierLog}]-object received-> ${someObject}`);
-        console.log('hola');
         console.log(
-          this.portService.MakeCall,
-          someObject.Lead.telephone.CountryCode,
-          someObject.Lead.telephone.Number
+          `[${this.idenfierLog}]-object received-> ${objectReceived}`
         );
-        // this.portService.MakeCall(
-        //   someObject.Lead.telephone.Number,
-        //   someObject.Lead.telephone.CountryCode
-        // );
+
+        const businessTarget = JSON.parse(objectReceived); //el string recibido lo pasamos a un objeto
+        console.log(businessTarget.Lead); //este ya es un objeto
+        this.portService.MakeCall(
+          businessTarget.Lead.telephone.Number,
+          businessTarget.Lead.telephone.CountryCode
+        );
       } catch (err) {
         console.error(err);
       }
