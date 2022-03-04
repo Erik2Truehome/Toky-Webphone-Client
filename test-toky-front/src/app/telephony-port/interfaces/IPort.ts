@@ -29,6 +29,7 @@ export interface Lead {
   lastName: string;
   telephone: Telephone;
   image?: string;
+  urlProperty?: string;
 }
 
 // export enum PortRegistrationStatus {

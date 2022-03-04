@@ -32,7 +32,6 @@ export class MonitoringTableComponent {
   public A: PortRegistrationStatus = PortRegistrationStatus.REGISTERED;
 
   constructor(private portService: PortService) {
-    // this.ports = portService.ports;
     this.selectedPort = null;
   }
 }

@@ -53,8 +53,8 @@ export class CreatePortService {
       let agentLinkedPort: Agent = {
         id: 1,
         email: email,
-        name: 'Erik',
-        lastName: 'Montes',
+        name: '',
+        lastName: '',
       };
 
       let phoneLead1: Telephone = {
@@ -63,8 +63,8 @@ export class CreatePortService {
       };
       let lead1: Lead = {
         email: '',
-        name: 'Fernando',
-        lastName: 'Cervantes',
+        name: '',
+        lastName: '',
         telephone: phoneLead1,
       };
 

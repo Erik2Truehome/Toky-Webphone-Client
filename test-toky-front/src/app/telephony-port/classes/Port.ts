@@ -347,11 +347,11 @@ export class Port implements IPort {
         if (this.currentInfo.status === PortStatus.DIALING) {
           this.currentInfo.status = PortStatus.NOTANSWERED;
           console.warn(
-            'ya pasaron los 19 segundos de dialing o discado. Cancelaremos la marcacion y reagendaremos'
+            'ya pasaron los 19 segundos de dialing o discado. Cancelaremos la marcacion y reagendaremos!!!'
           );
           this.tokySession.endCall();
         }
-      }, 23000);
+      }, 25000);
     });
 
     this.tokySession.on(SessionStatus.CONNECTED, () => {
@@ -463,8 +463,24 @@ export class Port implements IPort {
     this.optionCallTypeUI = OptionUI.Op0_Undefined;
     this.currentInfo.status = PortStatus.READY;
     this.isWaitingTransfer = false;
+
     this.currentInfo.businessTarget!.lead.telephone.number = '';
+    this.currentInfo.businessTarget!.lead.telephone.areaCode = '';
+    this.currentInfo.businessTarget!.lead.telephone.country = undefined;
+    this.currentInfo.businessTarget!.lead.email = '';
+    this.currentInfo.businessTarget!.lead.image = '';
+    this.currentInfo.businessTarget!.lead.lastName = '';
+    this.currentInfo.businessTarget!.lead.name = '';
+    this.currentInfo.businessTarget!.lead.urlProperty = '';
+
     this.currentInfo.businessTarget!.agentAssigned.email = '';
+    this.currentInfo.businessTarget!.agentAssigned.name = '';
+    this.currentInfo.businessTarget!.agentAssigned.lastName = '';
+    this.currentInfo.businessTarget!.agentAssigned.image = undefined;
+    this.currentInfo.businessTarget!.agentAssigned.ivrPhone = undefined;
+    this.currentInfo.businessTarget!.agentAssigned.telephoneForwarding =
+      undefined;
+
     this.transfiriendoAIvr = false;
     this._isThereAnyActiveCall = false;
     this._isOnHold = false;
